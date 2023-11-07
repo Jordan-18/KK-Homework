@@ -11,9 +11,7 @@ function Sidebar(){
     const [progressData, seprogressData] = useState(Number);
     const TopAccuracy = rankData[0]?.accuracy ?? 0
     const UnderAccuracy = rankData[(rankData.length)-1]?.accuracy ?? 0
-    // const { globalAPI, setglobalAPI } = useContext(MyContext);
     const { globalData, setglobalData } = useContext(MyContext);
-
     const handleRouteSelect = (route) => {
         setSelectedRoute(route);
     };
@@ -107,10 +105,10 @@ function Sidebar(){
                             {RouteModule.map((pageData, index) => (
                                 <div className="col mb-4" key={index}>
                                     <Link
-                                        className={`btn btn-icon btn-outline btn-bg-light btn-active-light-primary btn-flex flex-column flex-center w-90px h-90px border-gray-200 ${selectedRoute == pageData.to ? 'active' : ''}`} 
+                                        className={`btn btn-icon btn-outline btn-bg-light btn-active-light-primary btn-flex flex-column flex-center w-90px h-90px border-gray-200 ${selectedRoute == pageData.to.toLowerCase()+(pageData.params ? `?model=${pageData?.params?.toLowerCase()}` : '') ? 'active' : ''}`} 
                                         data-kt-button="true"
                                         to={`/${pageData.to.toLowerCase()}${pageData.params ? `?model=${pageData?.params?.toLowerCase()}` : ''}`} 
-                                        onClick={() => handleRouteSelect(pageData.to)}
+                                        onClick={() => handleRouteSelect(pageData.to.toLowerCase()+(pageData.params ? `?model=${pageData?.params?.toLowerCase()}` : ''))}
                                     >
                                         <span className="mb-2">
                                             {Icon[index]}

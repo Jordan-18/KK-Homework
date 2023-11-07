@@ -5,7 +5,6 @@ import MyContext from '../components/MyContext.js';
 function Dashboard(){
     const [rankData, setrankData] = useState([]);
     const [loading, setLoading] = useState(true);
-    // const { globalAPI, setglobalAPI } = useContext(MyContext);
     const { globalData, setglobalData } = useContext(MyContext);
     
 
@@ -24,19 +23,7 @@ function Dashboard(){
 				console.error('Error fetching data:', error);
 			}
 		}
-        // fetch(`${globalAPI}/data`)
-        //   .then((response) => response.json())
-        //   .then((data) => {
-        //     const filteredRouteModule = data.filter((pageData) => pageData.accuracy !== undefined);
-        //     const sortedRouteModule = filteredRouteModule.slice().sort((a, b) => b.accuracy - a.accuracy);
-        //     setrankData(sortedRouteModule);
 
-        //     setLoading(false);
-        //   })
-        //   .catch((error) => {
-        //     console.error('Error fetching data:', error);
-        //     setLoading(false);
-        //   });
         fetchData()
     }, [globalData]);
 

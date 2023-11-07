@@ -24,7 +24,7 @@ function Header(){
                                 >
                                     <Link
                                         to={`/${pageData.to.toLowerCase()}${pageData.params ? `?model=${pageData?.params?.toLowerCase()}` : ''}`} 
-                                        onClick={() => handleRouteSelect(pageData.to)}
+                                        onClick={() => handleRouteSelect(pageData.to.toLowerCase()+(pageData.params ? `?model=${pageData?.params?.toLowerCase()}` : ''))}
                                     >
                                         <span className="menu-link">
                                             <span className="menu-title">{pageData.page.toUpperCase()}</span>
