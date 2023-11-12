@@ -9,5 +9,9 @@ const RouteModule = [
 	{ page: 'SVM', to: 'ai', params:'SVM', component: React.lazy(() => import('../page/model.ai.js')) },
 	{ page: 'SVMr', to: 'ai', params:'SVMr', component: React.lazy(() => import('../page/model.ai.js')) },
 	{ page: 'SVR', to: 'ai', params:'SVR', component: React.lazy(() => import('../page/model.ai.js')) },
+	{ page: 'LSTM', to: 'ai', params:'LSTM', component: React.lazy(() => import('../page/model.ai.js')) },
+	{ page: 'LSTMr', to: 'ai', params:'LSTMr', component: React.lazy(() => import('../page/model.ai.js')) },
+	{ page: 'RNN', to: 'ai', params:'RNN', component: React.lazy(() => import('../page/model.ai.js')) },
+	{ page: 'RNNr', to: 'ai', params:'RNNr', component: React.lazy(() => import('../page/model.ai.js')) },
 ];
 export default RouteModule;

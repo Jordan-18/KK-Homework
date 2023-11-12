@@ -88,25 +88,27 @@ function TestData(){
             <div className="row g-5 g-xl-10">
                 <div className="col-xl-12 mb-5 mb-xl-10">
                     <div className="card card-flush h-xl-100">
-                        <div className="card-body d-flex flex-column justify-content-center align-items-center p-0" style={{marginTop: '20px',overflow: 'auto'}}>
+                        <div className="card-body d-flex flex-column justify-content-center align-items-center p-0" style={{marginTop: '20px'}}>
                             <div id="kt_charts_widget_29" className="ps-7 pe-0 mb-5 d-flex align-items-center">
-                            {rankData.map((data, index) => (
-                                <div className="col mb-4 m-2" key={index}>
-                                    <input 
-                                        type="radio" 
-                                        className="btn-check" 
-                                        name="optionsModel" 
-                                        id={`option${index}`}
-                                        onChange={() => setModelSelected(true)}
-                                    />
-                                    <label className="btn btn-outline-primary" htmlFor={`option${index}`} 
-                                        style={{height:'100px', width:'150px', border:'1px solid #c0c0c1', color:'#727172'}}>
-                                        {data.model.length > 10 ? `${(data.model.slice(0, 7)).toUpperCase()}...` : data.model.toUpperCase()}
-                                        <br/>
-                                        {(parseFloat(data.accuracy)).toFixed(2)}
-                                    </label>
-                                </div>
-                            ))}
+                            <div className="row">
+                                {rankData.map((data, index) => (
+                                    <div className="col mb-4 m-2" key={index}>
+                                        <input 
+                                            type="radio" 
+                                            className="btn-check" 
+                                            name="optionsModel" 
+                                            id={`option${index}`}
+                                            onChange={() => setModelSelected(true)}
+                                        />
+                                        <label className="btn btn-outline-primary" htmlFor={`option${index}`} 
+                                            style={{height:'80px', width:'150px', border:'1px solid #c0c0c1', color:'#727172'}}>
+                                            {data.model.length > 10 ? `${(data.model.slice(0, 7)).toUpperCase()}...` : data.model.toUpperCase()}
+                                            <br/>
+                                            {(parseFloat(data.accuracy)).toFixed(2)}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
                             </div>
                         </div>
                     </div>

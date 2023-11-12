@@ -49,33 +49,33 @@ function Temp(){
 		<div className="d-flex flex-column flex-root app-root" id="kt_app_root">
 			<div className="app-page flex-column flex-column-fluid" id="kt_app_page">
 			<BrowserRouter>
-				<Header/>
-					<div className="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-						<Sidebar/>
-						<div className="app-main flex-column flex-row-fluid" id="kt_app_main">
-							<div className="d-flex flex-column flex-column-fluid">
-							<div id="kt_app_content" className="app-content flex-column-fluid">
-            					<div id="kt_app_content_container" className="app-container container-xxl">
-								<Routes>
-									{RouteModule.map((pageData, index) =>(
-										<Route 
-											key={index}
-											path={`/${pageData.to.toLowerCase()}`} 
-											element={
-												<Suspense fallback={<BigSpinner/>}>
-													<pageData.component/>
-												</Suspense>
-											}
-										/>
-									))}
-								</Routes>
-								</div>
+				{/* <Header/> */}
+				<div className="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper" style={{ marginTop:'50px'}}>
+					<Sidebar/>
+					<div className="app-main flex-column flex-row-fluid" id="kt_app_main">
+						<div className="d-flex flex-column flex-column-fluid">
+						<div id="kt_app_content" className="app-content flex-column-fluid">
+							<div id="kt_app_content_container" className="app-container container-xxl">
+							<Routes>
+								{RouteModule.map((pageData, index) =>(
+									<Route 
+										key={index}
+										path={`/${pageData.to.toLowerCase()}`} 
+										element={
+											<Suspense fallback={<BigSpinner/>}>
+												<pageData.component/>
+											</Suspense>
+										}
+									/>
+								))}
+							</Routes>
 							</div>
-							</div>
-							<Footer/>
 						</div>
+						</div>
+						<Footer/>
 					</div>
-				</BrowserRouter>
+				</div>
+			</BrowserRouter>
 			</div>
 		</div>
 		</MyContext.Provider>
