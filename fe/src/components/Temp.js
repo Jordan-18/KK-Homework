@@ -11,7 +11,7 @@ import RouteModule from '../Routes/Routes.js';
 import MyContext from './MyContext';
 
 function Temp(){
-	const [globalAPI, setGlobalAPI] = useState('http://192.168.0.9:5234');
+	const [globalAPI, setGlobalAPI] = useState('http://localhost:5234');
 	const [globalData, setglobalData] = useState([])
 
 	async function getData(){
