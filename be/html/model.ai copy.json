@@ -1,11 +1,11 @@
 [
     {
         "model": "decisiontree",
-        "accuracy": "0.33"
+        "accuracy": "0.51"
     },
     {
         "model": "randomforest",
-        "accuracy": "0.35"
+        "accuracy": "0.77"
     },
     {
         "model": "fuzzy",
@@ -25,26 +25,26 @@
     },
     {
         "model": "ann",
-        "accuracy": "0.35"
+        "accuracy": "0.3353"
     },
     {
         "model": "annr",
-        "accuracy": "0.31784799180399526"
+        "accuracy": "0.3234997318101711"
     },
     {
         "model": "rnn",
-        "accuracy": "0.34"
+        "accuracy": "0.3327"
     },
     {
         "model": "rnnr",
-        "accuracy": "0.28539965714864335"
+        "accuracy": "0.2700065583782316"
     },
     {
         "model": "lstm",
-        "accuracy": "0.34"
+        "accuracy": "0.3413"
     },
     {
         "model": "lstmr",
-        "accuracy": "0.31240169178039034"
+        "accuracy": "0.3143179329764335"
     }
 ]
