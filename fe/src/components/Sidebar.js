@@ -25,7 +25,7 @@ function Sidebar(){
                     const sortedRouteModule = filteredRouteModule.slice().sort((a, b) => b?.accuracy - a?.accuracy);
                     setrankData(sortedRouteModule);
     
-                    const maxProgress = 20;
+                    const maxProgress = 15;
                     const ownedModel = sortedRouteModule.length
                     const progress = (ownedModel / maxProgress) * 100;
                     seprogressData(progress)

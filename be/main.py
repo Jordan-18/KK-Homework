@@ -10,6 +10,10 @@ CORS(app)  # This enables CORS for your Flask app.
 data_file = "./html/model.ai.json"
 html_folder = "./html/"
 
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({"status": "Success"}), 404
+
 @app.route('/data', methods=['GET'])
 def get_data():
     try:
