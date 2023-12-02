@@ -3,6 +3,7 @@ from flask_cors import CORS
 import json
 import joblib
 import numpy as np
+import pandas as pd
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler,MinMaxScaler
 
 app = Flask(__name__)
@@ -13,7 +14,13 @@ html_folder = "./html/"
 encoder = LabelEncoder()
 scaler = StandardScaler()
 onehot = OneHotEncoder()
-minmaxscaler = MinMaxScaler()
+# minmaxscaler = MinMaxScaler()
+# encoder = joblib.load('model/pre/encoder.joblib')
+# scaler = joblib.load('model/pre/scaler.joblib')
+# onehot = joblib.load('model/pre/onehot.joblib')
+minmaxscaler = joblib.load('model/pre/minmaxscaler.joblib')
+
+dataset = pd.read_csv('data/market_cluster.csv', encoding='latin1')
 
 @app.route('/', methods=['GET'])
 def index():
@@ -60,17 +67,17 @@ def predict(filename):
         }
         
         if not is_regression:
-            profit = scaler.fit_transform([[float(json_data["profit"])]])[0][0]
+            profit = minmaxscaler.fit_transform([[float(json_data["profit"])]])[0][0]
             input_data['Profit'] = profit
-            
+
         input_data = np.array(list(input_data.values())).reshape(1, -1)
         predict = loaded_model.predict(input_data)
         
         if is_regression:
             predictions_list = predict.tolist() if isinstance(predict, np.ndarray) else [predict]
             predictions = predictions_list[0][0] if isinstance(predictions_list[0], list) else predictions_list[0]
-            inverse_prediction = scaler.inverse_transform([[predictions]])[0][0]
-            return jsonify({'predict' : round(inverse_prediction.tolist() * 1000, 2)})
+            inverse_prediction = minmaxscaler.inverse_transform([[predictions]])[0][0]
+            return jsonify({'predict' : round(inverse_prediction.tolist(), 2)})
         else:
             class_to_numeric = {'Low': 0, 'Medium': 1, 'High': 2}
             numeric_to_class = {v: k for k, v in class_to_numeric.items()}

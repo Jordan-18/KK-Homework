@@ -114,7 +114,7 @@ function TestData(){
             showConfirmButton: false,
         });
 
-        await fetch('http://localhost:5234/predict/'+modelSelected, {
+        await fetch(`${globalData.api}/predict/`+modelSelected, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -153,7 +153,7 @@ function TestData(){
             showConfirmButton: false,
         });
 
-        await fetch('http://localhost:5234/predict/'+modelSelection.value, {
+        await fetch(`${globalData.api}/predict/`+modelSelection.value, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
