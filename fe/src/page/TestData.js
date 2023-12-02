@@ -11,7 +11,7 @@ function TestData(){
     const [camera, setCamera] = useState(false);
     const [loading, setLoading] = useState(true);
     const { globalData, setglobalData } = useContext(MyContext);
-    const [modelSelected, setModelSelected] = useState(false);
+    const [modelSelected, setModelSelected] = useState(null);
     const [buttonImg, setButtonImg] = useState(false);
     const webcamRef = useRef(null)
     const [modelSelection, setmodelSelection] = useState(null);
@@ -103,7 +103,6 @@ function TestData(){
         for (let [key, value] of formData.entries()) {
             jsonData[key] = value;
         }
-        console.log(jsonData);
 
         Swal.fire({
             title: 'Loading...',
@@ -114,11 +113,61 @@ function TestData(){
             },
             showConfirmButton: false,
         });
-        
-        setTimeout(() => {
-            console.log('test');
-            Swal.close()
-        }, 2000);
+
+        await fetch('http://localhost:5234/predict/'+modelSelected, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => response.json()) 
+        .then(data => {
+            document.getElementById('profit').value = data.predict
+            Swal.close();
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    }
+
+    async function PredictClassification(event){
+        event.preventDefault();
+
+        if(!modelSelection){
+            return alert("Please select a model first");
+        }
+        let formData = new FormData(document.getElementById('form-prediction'));
+        let jsonData = {};
+        for (let [key, value] of formData.entries()) {
+            jsonData[key] = value;
+        }
+
+        Swal.fire({
+            title: 'Loading...',
+            timerProgressBar: true,
+            allowOutsideClick: false,
+            onBeforeOpen: () => {
+              Swal.showLoading();
+            },
+            showConfirmButton: false,
+        });
+
+        await fetch('http://localhost:5234/predict/'+modelSelection.value, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => response.json()) 
+        .then(data => {
+            document.getElementById('label').value = data.predict
+            Swal.close();
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
     }
 
     useEffect(() => {
@@ -163,7 +212,7 @@ function TestData(){
                                             className="btn-check" 
                                             name="optionsModel" 
                                             id={`option${index}`}
-                                            onChange={() => setModelSelected(true)}
+                                            onChange={() => setModelSelected(data.model)}
                                         />
                                         <label className="btn btn-outline-primary" htmlFor={`option${index}`} 
                                             style={{height:'80px', width:'150px', border:'1px solid #c0c0c1', color:'#727172'}}>
@@ -227,47 +276,51 @@ function TestData(){
                     <div className="card card-flush h-xl-100">
                         <div className="card-body d-flex flex-column justify-content-center align-items-center p-0">
                             <div id="kt_charts_widget_29" className="m-5">
-                                <form id='form-prediction'>
+                                <form id='form-prediction' onSubmit={PredictClassification}>
                                     <div className='row'>
-                                        <div className="mb-3">
+                                        <div className="mb-3 col-md-6">
                                             <label htmlFor="customer-name" className="form-label">Customer Name</label>
                                             <input type="text" className="form-control" id="customer-name" name="customer-name"/>
                                         </div>
-                                        <div className="mb-3">
+                                        <div className="mb-3 col-md-6">
                                             <label htmlFor="category" className="form-label">Category</label>
                                             <input type="text" className="form-control" id="category" name="category"/>
                                         </div>
-                                        <div className="mb-3">
+                                        <div className="mb-3 col-md-6">
                                             <label htmlFor="city" className="form-label">City</label>
                                             <input type="text" className="form-control" id="city" name="city"/>
                                         </div>
-                                        <div className="mb-3">
+                                        <div className="mb-3 col-md-6">
                                             <label htmlFor="month" className="form-label">Month</label>
                                             <input type="text" className="form-control" id="month" name="month"/>
                                         </div>
-                                        <div className="mb-3">
+                                        <div className="mb-3 col-md-6">
                                             <label htmlFor="region" className="form-label">Region</label>
                                             <input type="text" className="form-control" id="region" name="region"/>
                                         </div>
-                                        <div className="mb-3">
+                                        <div className="mb-3 col-md-6">
                                             <label htmlFor="sales" className="form-label">Sales</label>
                                             <input type="number" className="form-control" id="sales" name="sales"/>
                                         </div>
-                                        <div className="mb-3">
+                                        <div className="mb-3 col-md-6">
                                             <label htmlFor="discount" className="form-label">Discount</label>
-                                            <input type="number" className="form-control" id="discount" name="discount"/>
+                                            <input type="number" step="0.01" className="form-control" id="discount" name="discount"/>
                                         </div>
-                                        <div className="mb-3">
+                                        <div className="mb-3 col-md-6">
                                             <label htmlFor="profit" className="form-label">Profit</label>
-                                            <input type="number" className="form-control" id="profit" name="profit"/>
+                                            <input type="number" step="0.01" readOnly className="form-control" id="profit" name="profit"/>
                                         </div>
-                                        <div className="mb-3">
+                                        <div className="mb-3 col-md-6">
                                             <label htmlFor="model" className="form-label">Model</label>
                                             <Select
                                                 defaultValue={modelSelection}
                                                 onChange={setmodelSelection}
                                                 options={classificationData}
                                             />
+                                        </div>
+                                        <div className="mb-3 col-md-6">
+                                            <label htmlFor="label" className="form-label">Label</label>
+                                            <input type="text" readOnly className="form-control" id="label" name="label"/>
                                         </div>
                                     </div>
                                     <button type="submit" className="btn btn-primary" style={{float: 'right'}}>Predict</button>
